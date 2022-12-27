@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Finder - Community Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-dark: #0f172a;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #f59e0b;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f8fafc;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Top Nav */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #0f172a;
+      text-decoration: none;
+    }
+    .brand img {
+      height: 38px;
+      object-fit: contain;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .nav-btn {
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .nav-btn.primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .nav-btn.primary:hover {
+      background: var(--primary-hover);
+    }
+    .nav-btn.secondary {
+      background: #f1f5f9;
+      color: #334155;
+    }
+    .nav-btn.secondary:hover {
+      background: #e2e8f0;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+    }
+    .hero-img-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      max-height: 380px;
+      background: #1e293b;
+    }
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.95;
+    }
+    .hero-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.9));
+      color: #fff;
+    }
+    .hero-caption h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .hero-caption p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Quick Launch Cards */
+    .quick-launch {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .ql-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .ql-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+    .ql-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ql-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+    .ql-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    /* Workflow Section */
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .wf-step {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-align: center;
+      position: relative;
+    }
+    .wf-step-num {
+      width: 36px;
+      height: 36px;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem auto;
+    }
+    .wf-step h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .wf-step p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Service Categories Visual Grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .cat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      transition: all 0.2s;
+    }
+    .cat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+    .cat-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      background: #f1f5f9;
+    }
+    .cat-card-body {
+      padding: 0.75rem;
+    }
+    .cat-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .cat-badge {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: #64748b;
+      background: #f8fafc;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Provider Avatars */
+    .providers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+    .provider-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .provider-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+    }
+    .provider-card h5 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .provider-card span {
+      font-size: 0.8rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo-1.png" alt="Service Finder" onerror="this.style.display='none'">
+        <span>Service Finder</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-banner">
+    <div class="hero-img-wrap">
+      <img src="banner-main.png" alt="Find Providers in Bahria Town Islamabad" onerror="this.src='main-banner-s.png'">
+      <div class="hero-caption">
+        <h1>Bahria Town Service Finder</h1>
+        <p>Connecting Residents with Verified Local Service Providers & On-Demand Experts</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Body Content -->
+  <main class="container">
+
+    <!-- Operational Workflow -->
+    <section>
+      <h2 class="section-title">How Service Finder Works</h2>
+      <p class="section-subtitle">A seamless 6-step lifecycle connecting residents and providers</p>
+      
+      <div class="workflow-grid">
+        <div class="wf-step">
+          <div class="wf-step-num">1</div>
+          <h4>Provider Joins</h4>
+          <p>Provider registers profile, pricing, and operational zones.</p>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">2</div>
+          <h4>Task Posted</h4>
+          <p>Resident creates requirement or selects direct provider.</p>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">3</div>
+          <h4>Receive Bids</h4>
+          <p>Nearby qualified providers offer competitive quotes.</p>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">4</div>
+          <h4>Select Best</h4>
+          <p>Resident compares ratings, reviews, and picks the provider.</p>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">5</div>
+          <h4>Work Executed</h4>
+          <p>Task completed professionally at the residence.</p>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">6</div>
+          <h4>Review & Pay</h4>
+          <p>Community ratings submitted and invoice settled.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Graphics Grid -->
+    <section>
+      <h2 class="section-title">Directory Categories</h2>
+      <p class="section-subtitle">Visual tiles for local services</p>
+
+      <div class="category-grid">
+        <div class="cat-card">
+          <img src="Plumber.png" alt="Plumber">
+          <div class="cat-card-body">
+            <h4>Plumber</h4>
+            <span class="cat-badge">Home Maintenance</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="CARPENTER.png" alt="Carpenter">
+          <div class="cat-card-body">
+            <h4>Carpenter</h4>
+            <span class="cat-badge">Home Maintenance</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Domestic Services.png" alt="Domestic Services">
+          <div class="cat-card-body">
+            <h4>Domestic Services</h4>
+            <span class="cat-badge">Housekeeping</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Barber.png" alt="Barber">
+          <div class="cat-card-body">
+            <h4>Barber</h4>
+            <span class="cat-badge">Beauty Care</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Beauty Salon And Spa.png" alt="Beauty Salon & Spa">
+          <div class="cat-card-body">
+            <h4>Beauty Salon & Spa</h4>
+            <span class="cat-badge">Beauty Care</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Dentist.png" alt="Dentist">
+          <div class="cat-card-body">
+            <h4>Dentist</h4>
+            <span class="cat-badge">Health Care</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Hospital.png" alt="Hospitals">
+          <div class="cat-card-body">
+            <h4>Hospital</h4>
+            <span class="cat-badge">Health Care</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Car Wash.png" alt="Car Wash">
+          <div class="cat-card-body">
+            <h4>Car Wash</h4>
+            <span class="cat-badge">Automotive</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="car-workshop.png" alt="Car Workshop">
+          <div class="cat-card-body">
+            <h4>Car Workshop</h4>
+            <span class="cat-badge">Automotive</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="fastfood.png" alt="Fast Food">
+          <div class="cat-card-body">
+            <h4>Food & Dining</h4>
+            <span class="cat-badge">Dining</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Milk Provider.png" alt="Milk Provider">
+          <div class="cat-card-body">
+            <h4>Milk Provider</h4>
+            <span class="cat-badge">Daily Essentials</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Vegetable & Fruits Organic Food Store Logo.png" alt="Organic Store">
+          <div class="cat-card-body">
+            <h4>Vegetables & Fruits</h4>
+            <span class="cat-badge">Grocery</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Gym.png" alt="Gym">
+          <div class="cat-card-body">
+            <h4>Gym & Fitness</h4>
+            <span class="cat-badge">Lifestyle</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="yoga.png" alt="Yoga">
+          <div class="cat-card-body">
+            <h4>Yoga & Wellness</h4>
+            <span class="cat-badge">Lifestyle</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Courier Service.png" alt="Courier Service">
+          <div class="cat-card-body">
+            <h4>Courier Service</h4>
+            <span class="cat-badge">Logistics</span>
+          </div>
+        </div>
+
+        <div class="cat-card">
+          <img src="Tailor Instagram Template.png" alt="Tailors">
+          <div class="cat-card-body">
+            <h4>Tailors</h4>
+            <span class="cat-badge">Fashion</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Providers -->
+    <section>
+      <h2 class="section-title">Featured Service Providers</h2>
+      <p class="section-subtitle">Verified local community technicians & specialists</p>
+
+      <div class="providers-grid">
+        <div class="provider-card">
+          <img src="Rehan-plumber.png" alt="Rehan">
+          <div>
+            <h5>Rehan</h5>
+            <span>Certified Plumber</span>
+          </div>
+        </div>
+
+        <div class="provider-card">
+          <img src="ibrar.png" alt="Ibrar">
+          <div>
+            <h5>Ibrar</h5>
+            <span>Home Maintenance</span>
+          </div>
+        </div>
+
+        <div class="provider-card">
+          <img src="Skindar.png" alt="Skindar">
+          <div>
+            <h5>Skindar</h5>
+            <span>Vehicle Specialist</span>
+          </div>
+        </div>
+
+        <div class="provider-card">
+          <img src="Wahab.png" alt="Wahab">
+          <div>
+            <h5>Wahab</h5>
+            <span>Technical Services</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Service Finder</strong> — University Project (Social Work)</p>
+    <p style="margin-top: 6px;">Bahria Town Islamabad Community Services Portal</p>
+  </footer>
+
+</body>
+</html>
